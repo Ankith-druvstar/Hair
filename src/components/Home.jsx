@@ -1,10 +1,9 @@
-import React, { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import "../styles/main.scss";
+import ShampooBuilderModal from "./ShampooBuilderModal";
+
+import { Tooltip } from "react-tooltip";
 
 export default function Home() {
   const productsRef = useRef(null);
@@ -12,6 +11,17 @@ export default function Home() {
 
   const scrollToSection = (ref) => {
     ref.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const [flipped, setFlipped] = useState({});
+  const [builderOpen, setBuilderOpen] = useState(false);
+  const [finalBlend, setFinalBlend] = useState(null);
+
+  const toggleFlip = (index) => {
+    setFlipped((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
   };
 
   // 🔥 Parallax logic
@@ -35,12 +45,8 @@ export default function Home() {
           <span onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
             Home
           </span>
-          <span onClick={() => scrollToSection(productsRef)}>
-            Products
-          </span>
-          <span onClick={() => scrollToSection(aboutRef)}>
-            About
-          </span>
+          <span onClick={() => scrollToSection(productsRef)}>Products</span>
+          <span onClick={() => scrollToSection(aboutRef)}>About</span>
         </div>
       </div>
 
@@ -92,24 +98,53 @@ export default function Home() {
       {/* Features */}
       <section className="features">
         {[
-          { title: "Fragrance", img: "/fragrance.jpg" },
-          { title: "Hair Type", img: "/straight_hair.jpg" },
-          { title: "Scalp Type", img: "/women_scalp.jpg" },
-          { title: "Hair Concern", img: "/dandurf.avif" },
+          {
+            title: "Fragrance",
+            img: "/fragrance.jpg",
+            items: ["Rose", "Lavender", "Jasmine", "Aloe Vera"],
+          },
+          {
+            title: "Hair Type",
+            img: "/straight_hair.jpg",
+            items: ["Straight", "Wavy", "Curly", "Coily"],
+          },
+          {
+            title: "Scalp Type",
+            img: "/women_scalp.jpg",
+            items: ["Dry", "Oily", "Normal", "Sensitive"],
+          },
+          {
+            title: "Hair Concern",
+            img: "/dandurf.avif",
+            items: ["Dandruff", "Hair Fall", "Frizz", "Dryness"],
+          },
         ].map((item, i) => (
           <motion.div
             key={i}
-            className="feature-card"
+            className={`feature-card ${flipped[i] ? "flipped" : ""}`}
+            onClick={() => toggleFlip(i)}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.2 }}
           >
-            <div className="image-wrapper">
-              <img src={item.img} alt={item.title} />
+            <div className="flip-inner">
+              {/* FRONT */}
+              <div className="flip-front">
+                <img src={item.img} alt={item.title} />
+                <div className="overlay-text">
+                  <h3>{item.title}</h3>
+                  <p>Tap to explore</p>
+                </div>
+              </div>
 
-              <div className="overlay-text">
+              {/* BACK */}
+              <div className="flip-back">
                 <h3>{item.title}</h3>
-                <p>Customized for you</p>
+                <ul>
+                  {item.items.map((val, idx) => (
+                    <li key={idx}>{val}</li>
+                  ))}
+                </ul>
               </div>
             </div>
           </motion.div>
@@ -122,7 +157,14 @@ export default function Home() {
         initial={{ scale: 0.9, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
       >
-        <button>Customize your shampoo now</button>
+        <button
+          onClick={() => {
+            setFinalBlend(null);
+            setBuilderOpen(true);
+          }}
+        >
+          Customize your shampoo
+        </button>
       </motion.section>
 
       {/* Logo */}
@@ -146,11 +188,47 @@ export default function Home() {
         </p>
 
         <div className="details">
-          <p><strong>Owner:</strong> Snithika</p>
-          <p><strong>Address:</strong> 45 Blossom Street, Jubilee Hills, Hyderabad, India</p>
-          <p><strong>Phone:</strong> +91 98765 43210</p>
+          <p>
+            <strong>Owner:</strong> Snithika
+          </p>
+          <p>
+            <strong>Address:</strong> 45 Blossom Street, Jubilee Hills,
+            Hyderabad, India
+          </p>
+          <p>
+            <strong>Phone:</strong> +91 98765 43210
+          </p>
         </div>
       </section>
+      <ShampooBuilderModal
+        open={builderOpen}
+        onClose={() => setBuilderOpen(false)}
+        setFinalBlend={setFinalBlend}
+      />
+      {finalBlend && (
+        <>
+          <div
+            className="floating-bottle"
+            data-tooltip-id="shampoo-tooltip"
+            data-tooltip-html={`
+        <div>
+          <strong>Hair Type:</strong> ${finalBlend.hair}<br/>
+          <strong>Scalp:</strong> ${finalBlend.scalp}<br/>
+          <strong>Fragrance:</strong> ${finalBlend.fragrance}<br/>
+          <strong>Concern:</strong> ${finalBlend.concern}
+        </div>
+      `}
+          >
+            🧴
+          </div>
+
+          <Tooltip
+            id="shampoo-tooltip"
+            place="top"
+            className="custom-tooltip"
+          />
+        </>
+      )}
     </div>
   );
 }

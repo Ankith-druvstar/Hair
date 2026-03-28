@@ -439,3 +439,284 @@ $app-color: #c12872;
     background: rgba(0, 0, 0, 0.4);
   }
 }
+
+.feature-card {
+  perspective: 1000px;
+  cursor: pointer;
+
+  .flip-inner {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+
+  &.flipped .flip-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-front,
+  .flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* FRONT */
+  .flip-front {
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay-text {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      color: white;
+      text-align: center;
+    }
+  }
+
+  /* BACK */
+  .flip-back {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    transform: rotateY(180deg);
+    padding: 25px;
+    text-align: center;
+
+    h3 {
+      color: #c12872;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin: 5px 0;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+/* 🔥 GLASS MODAL */
+.builder-glass {
+  backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 20px !important;
+  padding: 20px;
+}
+
+/* TITLE */
+.builder-title {
+  text-align: center;
+  margin: 20px 0;
+  color: #c12872;
+  font-size: 20px;
+}
+
+/* OPTIONS (CENTER GRID) */
+.builder-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+/* OPTION CARD */
+.builder-card {
+  padding: 15px;
+  text-align: center;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background: #c12872;
+    color: white;
+    transform: scale(1.05);
+  }
+}
+
+/* 🧴 PREVIEW (BOTTOM) */
+.builder-preview {
+  text-align: center;
+  margin-top: 25px;
+
+  .bottle {
+    font-size: 50px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .builder-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* FINAL SCREEN BACKGROUND */
+.builder-complete {
+  border-radius: 20px !important;
+  overflow: hidden;
+
+  /* gradient waves */
+  background: linear-gradient(
+    270deg,
+    #c12872,
+    #ff7eb3,
+    #c12872,
+    #ff4f9a
+  );
+  background-size: 400% 400%;
+  animation: waveBG 8s ease infinite;
+
+  color: white;
+}
+
+/* animation */
+@keyframes waveBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* FINAL CONTENT */
+.final-screen {
+  text-align: center;
+  padding: 40px 20px;
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 15px;
+  }
+
+  .final-formula {
+    font-size: 16px;
+    opacity: 0.9;
+  }
+}
+
+/* FLOATING ICON */
+.floating-bottle {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 1000;
+
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  /* TOOLTIP */
+  .tooltip {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+
+    font-size: 12px;
+    white-space: nowrap;
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.3s;
+  }
+
+  &:hover .tooltip {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.floating-bottle {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 1000;
+
+  animation: hop 1.5s infinite;
+
+  &:hover {
+    animation: none;
+    transform: scale(1.2);
+  }
+
+  .tooltip {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+
+    font-size: 12px;
+    white-space: nowrap;
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.3s;
+  }
+
+  &:hover .tooltip {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🔥 HOP EFFECT */
+@keyframes hop {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(-12px); }
+  40% { transform: translateY(0); }
+  60% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.custom-tooltip {
+  background: white !important;
+  color: black !important;
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  font-size: 12px !important;
+  line-height: 1.6;
+  backdrop-filter: blur(10px);
+}

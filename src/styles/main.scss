@@ -124,7 +124,7 @@ $app-color: #c12872;
   padding: 40px;
 
   .feature-card {
-    background: rgba(255, 255, 255, 0.6);
+    background: white;
     backdrop-filter: blur(10px);
     padding: 20px;
     border-radius: 20px;
@@ -194,7 +194,7 @@ $app-color: #c12872;
 
     .image-wrapper {
       position: relative;
-      height: 220px;
+      height: 350px;
       border-radius: 20px;
       overflow: hidden;
 
@@ -243,4 +243,87 @@ $app-color: #c12872;
       }
     }
   }
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 95%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 1000;
+
+  .nav-right {
+    display: flex;
+    gap: 30px;
+
+    span {
+      cursor: pointer;
+      color: white;
+      font-weight: 500;
+      transition: 0.3s;
+
+      &:hover {
+        color: #c12872;
+      }
+    }
+  }
+}
+
+/* prevent overlap */
+.hero {
+  margin-top: 70px;
+}
+
+.products-section {
+  padding: 80px 20px;
+  text-align: center;
+
+  h2 {
+    color: #c12872;
+  }
+}
+
+.about-section {
+  padding: 80px 20px;
+  background: #f9f9f9;
+  text-align: center;
+
+  h2 {
+    color: #c12872;
+    margin-bottom: 20px;
+  }
+
+  .details {
+    margin-top: 20px;
+    line-height: 1.8;
+  }
+}
+
+.home {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 🌿 FULL PAGE BACKGROUND */
+.page-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  z-index: -2;
+
+  filter: blur(8px) brightness(0.7);
+}
+
+/* optional overlay for readability */
+.home::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: -1;
 }

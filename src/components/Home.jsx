@@ -1,10 +1,49 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import "../styles/main.scss";
 
 export default function Home() {
+  const productsRef = useRef(null);
+  const aboutRef = useRef(null);
+
+  const scrollToSection = (ref) => {
+    ref.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // 🔥 Parallax logic
+  const { scrollY } = useScroll();
+  const bgY = useTransform(scrollY, [0, 1000], [0, 150]);
+  const bgScale = useTransform(scrollY, [0, 1000], [1.05, 1.15]);
+
   return (
     <div className="home">
+      {/* 🌿 FULL PAGE BACKGROUND */}
+      <motion.img
+        src="/nature_background.jpg"
+        alt="background"
+        className="page-bg"
+        style={{ y: bgY, scale: bgScale }}
+      />
+
+      {/* 🔥 NAVBAR */}
+      <div className="navbar">
+        <div className="nav-right">
+          <span onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+            Home
+          </span>
+          <span onClick={() => scrollToSection(productsRef)}>
+            Products
+          </span>
+          <span onClick={() => scrollToSection(aboutRef)}>
+            About
+          </span>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <motion.section
         className="hero"
@@ -44,12 +83,18 @@ export default function Home() {
         <p className="subText">Built just for you.</p>
       </motion.section>
 
-      {/* 🔥 Updated Features */}
+      {/* PRODUCTS */}
+      <section ref={productsRef} className="products-section">
+        <h2>Our Products</h2>
+        <p>Coming soon...</p>
+      </section>
+
+      {/* Features */}
       <section className="features">
         {[
           { title: "Fragrance", img: "/fragrance.jpg" },
-          { title: "Hair Type", img: "/straight_hair.webp" },
-          { title: "Scalp Type", img: "/women_scalp.avif" },
+          { title: "Hair Type", img: "/straight_hair.jpg" },
+          { title: "Scalp Type", img: "/women_scalp.jpg" },
           { title: "Hair Concern", img: "/dandurf.avif" },
         ].map((item, i) => (
           <motion.div
@@ -90,6 +135,22 @@ export default function Home() {
         <h2>Serene Shine</h2>
         <p>Pure Roots. Smart Care.</p>
       </motion.section>
+
+      {/* ABOUT */}
+      <section ref={aboutRef} className="about-section">
+        <h2>About Us</h2>
+
+        <p>
+          Serene Shine is a personalized hair care brand focused on delivering
+          custom solutions tailored to your unique hair needs.
+        </p>
+
+        <div className="details">
+          <p><strong>Owner:</strong> Snithika</p>
+          <p><strong>Address:</strong> 45 Blossom Street, Jubilee Hills, Hyderabad, India</p>
+          <p><strong>Phone:</strong> +91 98765 43210</p>
+        </div>
+      </section>
     </div>
   );
 }

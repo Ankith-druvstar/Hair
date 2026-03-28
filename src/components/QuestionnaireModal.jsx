@@ -119,7 +119,6 @@ export default function QuestionnaireModal({ open, handleClose }) {
                   }`}
                   onClick={() => selectOption(opt.label)}
                 >
-                  <div className="icon">{opt.icon}</div>
                   <span>{opt.label}</span>
                 </div>
               ))}

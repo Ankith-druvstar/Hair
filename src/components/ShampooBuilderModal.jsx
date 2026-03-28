@@ -44,7 +44,7 @@ export default function ShampooBuilderModal({ open, onClose, setFinalBlend }) {
     } else {
       const finalData = { ...updated };
 
-      const formula = `${finalData.hair} ${finalData.concern} ${finalData.fragrance} Shampoo`;
+      // const formula = `${finalData.hair} ${finalData.concern} ${finalData.fragrance} Shampoo`;
 
       setFinalBlend(finalData);
     }

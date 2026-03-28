@@ -76,7 +76,7 @@ $app-color: #c12872;
 
 /* HERO FIXED (no image here) */
 .hero {
-  height: 100vh;
+  height: 200vh;
   position: relative;
   overflow: hidden;
 
@@ -326,4 +326,116 @@ $app-color: #c12872;
   inset: 0;
   background: rgba(0, 0, 0, 0.2);
   z-index: -1;
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+  /* NAVBAR */
+  .navbar {
+    padding: 15px 20px;
+
+    .nav-right {
+      gap: 15px;
+
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+
+  /* HERO */
+  .hero {
+    height: 80vh;
+
+    .overlay {
+      h1 {
+        font-size: 36px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+  }
+
+  /* BANNER */
+  .banner {
+    padding: 30px 15px;
+
+    .text {
+      font-size: 18px;
+    }
+
+    .subText {
+      font-size: 14px;
+    }
+  }
+
+  /* FEATURES */
+  .features {
+    grid-template-columns: 1fr; // 🔥 single column
+    padding: 20px;
+
+    .feature-card {
+      .image-wrapper {
+        height: 200px;
+      }
+
+      h3 {
+        font-size: 16px;
+      }
+    }
+  }
+
+  /* PRODUCTS */
+  .products-section {
+    padding: 50px 15px;
+
+    h2 {
+      font-size: 22px;
+    }
+  }
+
+  /* CTA */
+  .cta {
+    padding: 30px 15px;
+
+    button {
+      width: 100%;
+      font-size: 16px;
+    }
+  }
+
+  /* LOGO */
+  .logo-section {
+    padding: 40px 15px;
+
+    img {
+      width: 120px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+  }
+
+  /* ABOUT */
+  .about-section {
+    padding: 50px 15px;
+
+    h2 {
+      font-size: 22px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .navbar {
+    background: rgba(0, 0, 0, 0.4);
+  }
 }
